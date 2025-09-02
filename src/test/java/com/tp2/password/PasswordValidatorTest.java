@@ -5,21 +5,40 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class PasswordValidatorTest {
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-    // TODO: Replace these lines with your tests
+public class PasswordValidatorTest {
+
+    PasswordValidator validator = new PasswordValidator();
+
     @Test
-    void exampleTest(){
-        assertEquals(4, 2 + 1);
+    void testTooShortPassword() {
+        assertFalse(validator.isValid("abc")); // muy corta
     }
 
-//    Missing tests:
-//
-//- Password with less than 8 characters should be invalid
-//- Password with 8 or more characters should pass length validation
-//- Password without uppercase letter should be invalid
-//- Password without lowercase letter should be invalid
-//- Password without number should be invalid
-//- Password without special character should be invalid
-//- Password meeting all criteria should be valid
+    @Test
+    void testMissingUppercase() {
+        assertFalse(validator.isValid("abcdefg1!")); // sin mayúscula
+    }
+
+    @Test
+    void testMissingLowercase() {
+        assertFalse(validator.isValid("ABCDEFG1!")); // sin minúscula
+    }
+
+    @Test
+    void testMissingNumber() {
+        assertFalse(validator.isValid("Abcdefgh!")); // sin número
+    }
+
+    @Test
+    void testMissingSpecialCharacter() {
+        assertFalse(validator.isValid("Abcdefg1")); // sin especial
+    }
+
+    @Test
+    void testValidPassword() {
+        assertTrue(validator.isValid("Abcdefg1!")); // cumple todos los criterios
+    }
 }
